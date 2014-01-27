@@ -125,6 +125,20 @@
               // (cancelTouch cancels processing of single vs double taps for faster 'tap' response)
               var event = $.Event('tap')
               event.cancelTouch = cancelAll
+
+
+              var temporaryDisableLinks = function (e) {
+                e.preventDefault();
+              };
+
+              var allLinks = $('a').not($('a', touch.el));
+
+              allLinks.on('click', temporaryDisableLinks);
+
+              setTimeout(function () {
+                allLinks.off('click', temporaryDisableLinks);
+              }, 500);
+
               touch.el.trigger(event)
 
               // trigger double tap immediately
