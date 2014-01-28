@@ -126,18 +126,19 @@
               var event = $.Event('tap')
               event.cancelTouch = cancelAll
 
+              if (touch.el.prop('nodeName') !== 'A') {
+                var temporaryDisableLinks = function (e) {
+                  e.preventDefault();
+                };
 
-              var temporaryDisableLinks = function (e) {
-                e.preventDefault();
-              };
+                var allLinks = $('a').not(touch.el);
 
-              var allLinks = $('a').not(touch.el);
+                allLinks.on('click', temporaryDisableLinks);
 
-              allLinks.on('click', temporaryDisableLinks);
-
-              setTimeout(function () {
-                allLinks.off('click', temporaryDisableLinks);
-              }, 500);
+                setTimeout(function () {
+                  allLinks.off('click', temporaryDisableLinks);
+                }, 500);
+              }
 
               touch.el.trigger(event)
 
