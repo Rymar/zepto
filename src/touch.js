@@ -131,7 +131,7 @@
                 e.preventDefault();
               };
 
-              var allLinks = $('a').not($('a', touch.el));
+              var allLinks = $('a').not(touch.el);
 
               allLinks.on('click', temporaryDisableLinks);
 
