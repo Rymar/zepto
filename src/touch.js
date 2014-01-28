@@ -126,7 +126,7 @@
               var event = $.Event('tap')
               event.cancelTouch = cancelAll
 
-              if (touch.el.prop('nodeName') !== 'A') {
+              if (touch.el.prop('nodeName') !== 'A' && touch.el.parent('a').length === 0) {
                 var temporaryDisableLinks = function (e) {
                   e.preventDefault();
                 };
