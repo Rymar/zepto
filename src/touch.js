@@ -127,6 +127,10 @@
               event.cancelTouch = cancelAll
 
               if (touch.el.prop('nodeName') !== 'A' && touch.el.parents('a').length === 0) {
+
+                event.preventDefault();
+                event.stopPropagation();
+
                 var temporaryDisableLinks = function (e) {
                   e.preventDefault();
                 };
