@@ -102,6 +102,30 @@
           !isPrimaryTouch(e)) return
         cancelLongTap()
 
+        if (touch.el.prop('nodeName') !== 'A' && touch.el.parents('a').length === 0) {
+
+          if (touch.el.data('prevent') !== false) {
+            event.preventDefault();
+          }
+
+          if (touch.el.data('propagation') !== false) {
+            event.stopPropagation();
+          }
+
+          var temporaryDisableLinks = function (e) {
+            e.preventDefault();
+          };
+
+          var allLinks = $('a').not(touch.el);
+
+          allLinks.on('click', temporaryDisableLinks);
+
+          setTimeout(function () {
+            allLinks.off('click', temporaryDisableLinks);
+          }, 500);
+        }
+
+
         // swipe
         if ((touch.x2 && Math.abs(touch.x1 - touch.x2) > 30) ||
             (touch.y2 && Math.abs(touch.y1 - touch.y2) > 30))
@@ -125,24 +149,6 @@
               // (cancelTouch cancels processing of single vs double taps for faster 'tap' response)
               var event = $.Event('tap')
               event.cancelTouch = cancelAll
-
-              if (touch.el.prop('nodeName') !== 'A' && touch.el.parents('a').length === 0) {
-
-                event.preventDefault();
-                event.stopPropagation();
-
-                var temporaryDisableLinks = function (e) {
-                  e.preventDefault();
-                };
-
-                var allLinks = $('a').not(touch.el);
-
-                allLinks.on('click', temporaryDisableLinks);
-
-                setTimeout(function () {
-                  allLinks.off('click', temporaryDisableLinks);
-                }, 500);
-              }
 
               touch.el.trigger(event)
 
