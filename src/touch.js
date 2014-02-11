@@ -102,7 +102,7 @@
           !isPrimaryTouch(e)) return
         cancelLongTap()
 
-        if (touch.el.prop('nodeName') !== 'A' && touch.el.parents('a').length === 0) {
+        if (touch.el && touch.el.prop('nodeName') !== 'A' && touch.el.parents('a').length === 0) {
 
           if (touch.el.data('prevent') !== false) {
             event.preventDefault();
