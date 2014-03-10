@@ -102,30 +102,6 @@
           !isPrimaryTouch(e)) return
         cancelLongTap()
 
-        if (touch.el && touch.el.prop('nodeName') !== 'A' && touch.el.parents('a').length === 0) {
-
-          if (touch.el.data('prevent') !== false) {
-            event.preventDefault();
-          }
-
-          if (touch.el.data('propagation') !== false) {
-            event.stopPropagation();
-          }
-
-          var temporaryDisableLinks = function (e) {
-            e.preventDefault();
-          };
-
-          var allLinks = $('a').not(touch.el);
-
-          allLinks.on('click', temporaryDisableLinks);
-
-          setTimeout(function () {
-            allLinks.off('click', temporaryDisableLinks);
-          }, 500);
-        }
-
-
         // swipe
         if ((touch.x2 && Math.abs(touch.x1 - touch.x2) > 30) ||
             (touch.y2 && Math.abs(touch.y1 - touch.y2) > 30))
@@ -140,6 +116,21 @@
         else if ('last' in touch)
           // don't fire tap when delta position changed by more than 30 pixels,
           // for instance when moving to a point and back to origin
+
+          if (touch.el && touch.el.prop('nodeName') !== 'A' && touch.el.parents('a').length === 0) {
+            var temporaryDisableLinks = function (e) {
+              e.preventDefault();
+            };
+
+            var allLinks = $('a').not(touch.el);
+
+            allLinks.on('click', temporaryDisableLinks);
+
+            setTimeout(function () {
+              allLinks.off('click', temporaryDisableLinks);
+            }, 300);
+          }
+
           if (deltaX < 30 && deltaY < 30) {
             // delay by one tick so we can cancel the 'tap' event if 'scroll' fires
             // ('tap' fires before 'scroll')
